@@ -17,9 +17,9 @@ import telebot
 from telebot import types
 from flask import Flask, request
 
-# ============ НАСТРОЙКИ (тест) ============
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8902190310:AAEOCeyrXEd6w9Ri0vvDUZjaSLfocFDvy9Y")
-RBXCRATE_KEY = os.environ.get("RBXCRATE_KEY", "PltoTMg09vEb6PEmEnVTs4CmIYshXTlsaoJVgOkPM1Qcalo4eDqLT6Ayo8smLyylFVNw69C7gdCOoB0X")
+# ============ НАСТРОЙКИ ============
+BOT_TOKEN = os.environ["BOT_TOKEN"]
+RBXCRATE_KEY = os.environ["RBXCRATE_KEY"]
 
 RBXCRATE_GAMEPASS_ENDPOINT = "https://rbxcrate.com/api/orders/gamepass"
 RBXCRATE_INFO_ENDPOINT = "https://rbxcrate.com/api/orders/info"
@@ -42,22 +42,22 @@ state: Dict[int, Dict[str, Any]] = {}
 orders: Dict[str, Dict[str, Any]] = {}
 
 PLACE_INSTRUCTION = """Инструкция (ПК):
-1. Открой roblox.com → Discover → нужная игра
+1. Открой roblox.com -> Discover -> нужная игра
 2. Посмотри URL: roblox.com/games/123456789/Name
 3. Число после /games/ — это Place ID
 
 Инструкция (телефон):
 1. Открой roblox.com в браузере (не в приложении)
-2. Discover → выбери игру
+2. Discover -> выбери игру
 3. Нажми на адресную строку — увидишь .../games/123456789/
 """
 
 PASS_INSTRUCTION = """Как создать Game Pass:
 1. Открой Creator Dashboard на roblox.com (в браузере)
 2. Выбери свою игру
-3. Monetization → Passes → Create a Pass
+3. Monetization -> Passes -> Create a Pass
 4. Задай имя, описание, иконку
-5. Открой Pass → Sales → поставь цену → Save Changes
+5. Открой Pass -> Sales -> поставь цену -> Save Changes
 """
 
 # ============ Roblox API ============
@@ -275,7 +275,6 @@ def cb_paid(call):
         bot.send_message(call.message.chat.id, "Сессия устарела, начни заново /buy")
         return
 
-    # В тесте оплата считается подтверждённой сразу
     ok, resp = rbxcrate_create_order(
         order_id=order_id,
         username=row["roblox_username"],
@@ -444,7 +443,6 @@ def on_text(m):
             bot.send_message(chat_id, "❌ Не понял. Пришли ссылку на Game Pass или его ID.",
                              reply_markup=kbm_cancel())
             return
-        # Проверка цены
         details = roblox_get_gamepass_details(gp_id)
         if details:
             price = details.get("price") or details.get("Price") or details.get("priceInRobux")
