@@ -1,0 +1,11 @@
+{
+  "shop_bot_token": "",
+  "shop_enabled": true,
+  "rbxcrate_key": "",
+  "rbxcrate_endpoint": "https://rbxcrate.com/api/orders/gamepass",
+  "price_rub_per_100": 50,
+  "min_robux": 100,
+  "max_robux": 100000,
+  "gross_divider": 0.7,
+  "welcome_text": "👋 Привет! Я VorzaRBX — бот для покупки Robux.\n\n⚡ Автовыдача 24/7\n🔒 Безопасно через Game Pass\n\nНажми /buy чтобы начать."
+}
